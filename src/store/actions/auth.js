@@ -85,9 +85,10 @@ export const logIn = (email, password) => {
                 localStorage.setItem('displayName',response.data.displayName);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
+                
             })
             .catch(err => {
-                dispatch(authFail(err.response.data.error));
+                // dispatch(authFail(err.response.data.error));
             });
     };
 };

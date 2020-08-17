@@ -48,7 +48,8 @@ class LogIn extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const { email, password } = this.state;
-        this.props.logIn(email,password);    
+        this.props.logIn(email,password);   
+        this.props.history.push('/posts'); 
         console.log('logged');
     }
 

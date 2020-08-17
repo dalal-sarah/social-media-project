@@ -1,8 +1,10 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import * as actions from './store/actions/index';
 import Register from './components/Auth/Register'
 import LogIn from './components/Auth/LogIn'
+import { connect } from 'react-redux';
 
 function App() {
   return (
@@ -15,5 +17,12 @@ function App() {
     </div>
   );
 }
+const mapStateToProps = state => {
+  return {
+    // isAuthenticated: state.token !== null
+  };
+};
 
-export default withRouter (App);
+
+
+export default withRouter( connect( mapStateToProps )( App ) );

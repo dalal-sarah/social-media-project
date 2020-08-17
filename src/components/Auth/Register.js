@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import axios from "axios";
+import * as actions from '../../store/actions/index';
+import { connect } from 'react-redux';
 import LogIn from './LogIn'
+
+
 import Button from '@material-ui/core/Button'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -9,9 +13,7 @@ import Input from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
-// import classes from './css/Register.module.css'
-// import * as firebase from "firebase/app";
-// import "firebase/auth";
+
 
 
 
@@ -74,28 +76,9 @@ class Registration extends Component {
   }
 
   handleSubmit(event) {
-    const { email, password, displayName } = this.state;
-
-    axios
-      .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDuhXnx0Dz_nD1C_aZJ0x58sOGAgfIZtCc",
-        {
-          email: email,
-          password: password,
-          displayName: displayName,
-          returnSecureToken: true
-        }
-      )
-      .then(response => {
-        console.log(response);
-        alert('welcome '+response.data.displayName+', the register successful');
-        this.props.history.push('/LogIn');
-      })
-      .catch(error => {
-        alert(error);
-        console.log("registration error", error);
-      });
     event.preventDefault();
+    const { email, password, displayName } = this.state;
+    this.props.onAuth(email, password, displayName);
     console.log('registerd');
   }
 
@@ -112,7 +95,7 @@ class Registration extends Component {
 
             >
               <Input
-                // className={classes.InputElement}
+                style={{ margin: 20 }}
                 variant="outlined"
                 type="email"
                 name="email"
@@ -126,7 +109,7 @@ class Registration extends Component {
               />
 
               <Input
-                // className={classes.InputElement}
+                style={{ margin: 20 }}
                 variant="outlined"
                 type="password"
                 name="password"
@@ -139,6 +122,7 @@ class Registration extends Component {
               />
 
               <Input
+                style={{ margin: 20 }}
                 type="text"
                 name="displayName"
                 placeholder="displayName"
@@ -150,7 +134,7 @@ class Registration extends Component {
 
               />
 
-              <Button type="submit" color="secondary">Register</Button>
+              <Button type="submit" color="secondary" style={{ margin: 20 }}>Register</Button>
               <div> you  have an account ?<a href='/LogIn'>Log in</a></div>
             </Grid>
           </form>
@@ -160,4 +144,19 @@ class Registration extends Component {
   }
 }
 
-export default Registration
+const mapStateToProps = state => {
+  return {
+    error: state.error,
+    isAuthenticated: state.token !== null,
+
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (email, password, displayName) => dispatch(actions.auth(email, password, displayName))
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration); 

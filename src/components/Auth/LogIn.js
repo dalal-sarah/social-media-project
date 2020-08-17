@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import * as actions from '../../store/actions/index';
+import { connect } from 'react-redux';
+
+
+
 import Button from '@material-ui/core/Button'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -7,8 +12,7 @@ import Input from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
-// import * as firebase from "firebase/app";
-// import "firebase/auth";
+
 
 class LogIn extends Component {
 
@@ -42,28 +46,9 @@ class LogIn extends Component {
     }
 
     handleSubmit(event) {
-        const { email, password } = this.state;
-
-        axios
-            .post(
-                "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDuhXnx0Dz_nD1C_aZJ0x58sOGAgfIZtCc",
-                {
-
-                    email: email,
-                    password: password,
-                    returnSecureToken: true
-
-                }
-            )
-            .then(response => {
-                console.log(response);
-
-            })
-            .catch(error => {
-                alert(error);
-                console.log("LogIn error", error);
-            });
         event.preventDefault();
+        const { email, password } = this.state;
+        this.props.logIn(email,password);    
         console.log('logged');
     }
 
@@ -80,6 +65,7 @@ class LogIn extends Component {
 
                         >
                             <Input
+                                style={{ margin: 20 }}
                                 type="email"
                                 name="email"
                                 placeholder="Email"
@@ -92,6 +78,7 @@ class LogIn extends Component {
                             />
 
                             <Input
+                                style={{ margin: 20 }}
                                 type="password"
                                 name="password"
                                 placeholder="Password"
@@ -111,4 +98,20 @@ class LogIn extends Component {
         );
     }
 }
-export default LogIn
+const mapStateToProps = state => {
+    return {
+        loading: state.loading,
+        error: state.error,
+        isAuthenticated: state.token !== null,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+         
+         logIn: ( email, password ) => dispatch( actions.logIn( email, password ) )
+
+    };
+};
+
+export default connect( mapStateToProps, mapDispatchToProps )( LogIn );

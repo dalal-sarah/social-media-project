@@ -1,0 +1,15 @@
+.InputElement {
+    /* outline: none; */
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
+    width: 30%;
+    /* display: grid; */
+    /* box-sizing: border-box; */
+    /* width: 100%; */
+    /* padding: 10px; */
+    /* box-sizing: border-box; */
+}
+/* .Form {
+    border-style: solid ;
+} */

@@ -7,11 +7,13 @@ import LogIn from './components/Auth/LogIn'
 function App() {
   return (
     <div className="App">
-      <h1> hello there</h1>
-      <LogIn/>
-     
+      <Switch>
+        <Route path="/Register" component={Register} />
+        <Route path="/LogIn" exact component={LogIn} />
+        <Redirect to="/LogIn" component={LogIn} />
+      </Switch>
     </div>
   );
 }
 
-export default App;
+export default withRouter (App);

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom'
 
 
 
@@ -9,12 +10,21 @@ import Button from '@material-ui/core/Button'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Input from '@material-ui/core/Input';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 
 
 class LogIn extends Component {
+
+    state = {
+        email: "",
+        password: "",
+        LogInErrors: ""
+    };
+
+    
 
     theme = createMuiTheme({
         palette: {
@@ -29,14 +39,13 @@ class LogIn extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            email: "",
-            password: "",
-            LogInErrors: ""
-        };
-
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    // componentWillMount(){
+    //     console.log(this.props.match);
+    //     return this.props.isAuthenticated && this.props.match !== '/LogIn'
+    // }
 
     handleChange(event) {
         this.setState({
@@ -48,16 +57,18 @@ class LogIn extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const { email, password } = this.state;
-        this.props.logIn(email,password);   
-        this.props.history.push('/posts'); 
+        this.props.logIn(email,password,this.props.history);   
+        // this.props.history.push('/posts'); 
         console.log('logged');
     }
 
     render() {
+        const {loading , error ,isAuthenticated} =this.props;
+        console.log('rendering LogIn');
         return (
             <ThemeProvider theme={this.theme}>
                 <div>
-                    <form style={{ marginTop: 100, width: '100%' }} onSubmit={(event) => { this.handleSubmit(event) }}>
+                    <form style={{ marginTop: 100, width: '100%' }} onSubmit={this.handleSubmit }>
                         <Grid
                             container
                             direction="column"
@@ -91,7 +102,7 @@ class LogIn extends Component {
                             />
 
                             <Button type="submit" color="secondary">LogIn</Button>
-                            <div> you dont have an account ?<a href='/Register'> Sign up</a></div>
+                            <div> you dont have an account ?<Link to='/Register'> Sign up</Link></div>
                         </Grid>
                     </form>
                 </div>
@@ -101,16 +112,16 @@ class LogIn extends Component {
 }
 const mapStateToProps = state => {
     return {
-        loading: state.loading,
-        error: state.error,
-        isAuthenticated: state.token !== null,
+        loading: state.authReducer.loading,
+        error: state.authReducer.error,
+        isAuthenticated: state.authReducer.token !== null,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
          
-         logIn: ( email, password ) => dispatch( actions.logIn( email, password ) )
+         logIn: ( email, password ,history ) => dispatch( actions.logIn( email, password,history ) )
 
     };
 };

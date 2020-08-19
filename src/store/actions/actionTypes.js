@@ -1,7 +1,19 @@
 
 export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
-export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+export const POST_START = 'POST_START' ;
+export const POST_SUCCESS = 'POST_SUCCESS' ;
+export const POST_FAILED = 'POST_FAILED' ;
+export const GET_POSTS_START = 'GET_POSTS_START' ;
+export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS' ;
+export const GET_POSTS_FAILED = 'GET_POSTS_FAILED' ;
+
+export const UPDATE_POST_USERS = 'UPDATE_POST_USERS' ;
+export const UPDATE_POSTS_START = 'UPDATE_POSTS_START' ;
+export const UPDATE_POSTS_SUCCES = 'UPDATE_POSTS_SUCCES';
+
+export const SET_REDIRECT_PATH = 'SET_REDIRECT_PATH';

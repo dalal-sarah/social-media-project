@@ -6,7 +6,8 @@ const initialState = {
     userId: null,
     error: null,
     loading: false,
-    authRedirectPath: '/'
+    RedirectPath: '/',
+    isAuth: localStorage.getItem('token') != null
 };
 
 const authStart = ( state, action ) => {
@@ -19,6 +20,17 @@ const authSuccess = (state, action) => {
         userId: action.userId,
         error: null,
         loading: false
+
+     } );
+};
+
+const LogInSuccess = (state, action) => {
+    return updateObject( state, { 
+        token: action.idToken,
+        userId: action.userId,
+        error: null,
+        loading: false,
+        isAuth : true
      } );
 };
 
@@ -30,11 +42,11 @@ const authFail = (state, action) => {
 };
 
 const authLogout = (state, action) => {
-    return updateObject(state, { token: null, userId: null });
+    return updateObject(state, { token: null, userId: null , isAuth : false });
 };
 
-const setAuthRedirectPath = (state, action) => {
-    return updateObject(state, { authRedirectPath: action.path })
+const setRedirectPath = (state, action) => {
+    return updateObject(state, { RedirectPath: action.path })
 }
 
 const reducer = ( state = initialState, action ) => {
@@ -43,7 +55,9 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
         case actionTypes.AUTH_FAIL: return authFail(state, action);
         case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
-        case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state,action);
+        case actionTypes.LOGIN_SUCCESS: return LogInSuccess(state, action);
+        case actionTypes.SET_REDIRECT_PATH: return setRedirectPath(state,action);
+        
         default:
             return state;
     }

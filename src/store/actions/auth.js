@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import {history} from 'react-router-dom'
 
 import * as actionTypes from './actionTypes';
 
@@ -12,7 +13,14 @@ export const authSuccess = (token, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
-        userId: userId
+        userId: userId,
+        isAuth: localStorage['token'] != null
+    };
+};
+
+export const LogInSuccess = () => {
+    return {
+        type: actionTypes.LOGIN_SUCCESS
     };
 };
 
@@ -28,8 +36,10 @@ export const logout = () => {
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userId');
     localStorage.removeItem('displayName');
+    console.log('out');
     return {
-        type: actionTypes.AUTH_LOGOUT
+        type: actionTypes.AUTH_LOGOUT,
+        isAuth : false
     };
 };
 
@@ -41,7 +51,14 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
-export const auth = (email, password,displayName) => {
+export const setRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_REDIRECT_PATH,
+        path: path
+    };
+};
+
+export const auth = (email, password,displayName,history) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -58,14 +75,16 @@ export const auth = (email, password,displayName) => {
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
                 // dispatch(checkAuthTimeout(response.data.expiresIn));
+                history.push('/LogIn');
             })
             .catch(err => {
                 dispatch(authFail(err.response.data.error));
             });
     };
+    
 };
 
-export const logIn = (email, password) => {
+export const logIn = (email, password, history) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -83,9 +102,11 @@ export const logIn = (email, password) => {
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userId', response.data.localId);
                 localStorage.setItem('displayName',response.data.displayName);
-                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(LogInSuccess());
                 dispatch(checkAuthTimeout(response.data.expiresIn));
-                
+                // this.props.history.push('/posts'); 
+                history.push('/posts');
+                               
             })
             .catch(err => {
                 // dispatch(authFail(err.response.data.error));

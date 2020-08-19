@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect , Link} from 'react-router-dom';
 import axios from "axios";
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
@@ -78,7 +78,7 @@ class Registration extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { email, password, displayName } = this.state;
-    this.props.onAuth(email, password, displayName);
+    this.props.onAuth(email, password, displayName , this.props.history);
     console.log('registerd');
   }
 
@@ -135,7 +135,7 @@ class Registration extends Component {
               />
 
               <Button type="submit" color="secondary" style={{ margin: 20 }}>Register</Button>
-              <div> you  have an account ?<a href='/LogIn'>Log in</a></div>
+              <div> you  have an account ?<Link to='LogIn'>Log in</Link></div>
             </Grid>
           </form>
         </div>
@@ -146,15 +146,15 @@ class Registration extends Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.error,
-    isAuthenticated: state.token !== null,
+    error: state.authReducer.error,
+    isAuthenticated: state.authReducer.token !== null,
 
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, displayName) => dispatch(actions.auth(email, password, displayName))
+    onAuth: (email, password, displayName ,history) => dispatch(actions.auth(email, password, displayName ,history))
 
   };
 };

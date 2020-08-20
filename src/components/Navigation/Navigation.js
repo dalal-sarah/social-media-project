@@ -20,11 +20,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
 class Navigation extends Component {
     // classes = useStyles();
-    //  [value, setValue] = useState(0);
-    // state = '/posts';
-    // constructor(props) {
-    //     super(props);
-    // }
+    
 
     state = {
         pathes: [
@@ -89,8 +85,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
 
-        setPath: (path) => dispatch(actions.setRedirectPath(path)),
-        logOut: () => dispatch(actions.logout())
+        setPath: (path) => dispatch(actions.setRedirectPath(path))
 
     };
 };

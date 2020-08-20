@@ -146,8 +146,7 @@ class Registration extends Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.authReducer.error,
-    isAuthenticated: state.authReducer.token !== null,
+    error: state.authReducer.error
 
   };
 };

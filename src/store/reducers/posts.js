@@ -14,8 +14,6 @@ const postStart = ( state, action ) => {
 
 const postSuccess = (state, action) => {
     return updateObject( state, { 
-        // token: action.idToken,
-        // userId: action.userId,
         error: null,
         loading: false
 

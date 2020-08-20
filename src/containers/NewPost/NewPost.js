@@ -9,7 +9,6 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Grid from '@material-ui/core/Grid';
 
-// import './NewPost.css';
 
 class NewPost extends Component {
     state = {

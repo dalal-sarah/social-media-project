@@ -3,13 +3,14 @@ import {NavLink} from 'react-router-dom'
 
 class NavigationComponent extends Component {
     render() {
+        const {link , exact ,children } =this.props;
 
         return (
             <li >
                 <NavLink
-                    to={this.props.link}
-                    exact={this.props.exact}
-                    >{this.props.children}</NavLink>
+                    to={link}
+                    exact={exact}
+                    >{children}</NavLink>
             </li>
         );
     }

@@ -6,8 +6,7 @@ import Register from '../components/Auth/Register'
 import LogIn from '../components/Auth/LogIn'
 import LogOut from '../components/Auth/LogOut'
 import Posts from '../containers/Posts/Posts'
-import newPost from '../containers/NewPost/NewPost'
-import Navigation from '../components/Navigation/Navigation'
+import NewPost from '../containers/NewPost/NewPost'
 import PrivateRoute from '../components/Auth/PrivateRout'
 import { connect } from 'react-redux';
 
@@ -15,14 +14,13 @@ class AppRoutes extends Component {
     render() {
 
         return (
-            <React.Fragment>
-                {this.props.isAuthenticated ? <Navigation {...this.props} /> : (null)}
+            <React.Fragment>            
                 <Switch>
                     <Route path="/Register" component={Register} />
                     <Route path="/LogIn" exact component={LogIn} />
                     <PrivateRoute path="/logOut" exact component={LogOut} />
                     <PrivateRoute path="/posts" exact component={Posts} />
-                    <PrivateRoute path="/newpost" exact component={newPost} />
+                    <PrivateRoute path="/newpost" exact component={NewPost} />
                     <Redirect to="/posts" component={Posts} />
                 </Switch>
             </React.Fragment>

@@ -3,11 +3,7 @@ import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 
-
-
 import Button from '@material-ui/core/Button'
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import Input from '@material-ui/core/Input';
 
 // import { makeStyles } from '@material-ui/core/styles';
@@ -23,18 +19,7 @@ class LogIn extends Component {
         LogInErrors: ""
     };
 
-    
 
-    theme = createMuiTheme({
-        palette: {
-            primary: {
-                main: '#115293',
-            },
-            secondary: {
-                main: '#dc004e',
-            },
-        },
-    });
 
     constructor(props) {
         super(props);
@@ -62,10 +47,10 @@ class LogIn extends Component {
     }
 
     render() {
-        const {loading , error ,isAuthenticated} =this.props;
+        
         console.log('rendering LogIn');
         return (
-            <ThemeProvider theme={this.theme}>
+           
                 <div>
                     <form style={{ marginTop: 100, width: '100%' }} onSubmit={this.handleSubmit }>
                         <Grid
@@ -83,9 +68,9 @@ class LogIn extends Component {
                                 value={this.state.email}
                                 onChange={(event) => { this.handleChange(event) }}
                                 required
-                                id="standard-basic"
                                 color='primary'
                                 variant="outlined"
+                                key='email'
                             />
 
                             <Input
@@ -96,8 +81,8 @@ class LogIn extends Component {
                                 value={this.state.password}
                                 onChange={(event) => { this.handleChange(event) }}
                                 required
-                                id="standard-basic"
                                 color='primary'
+                                key='password'
                             />
 
                             <Button type="submit" color="secondary">LogIn</Button>
@@ -105,17 +90,11 @@ class LogIn extends Component {
                         </Grid>
                     </form>
                 </div>
-            </ThemeProvider>
+           
         );
     }
 }
-const mapStateToProps = state => {
-    return {
-        loading: state.authReducer.loading,
-        error: state.authReducer.error,
-        isAuthenticated: state.authReducer.token !== null,
-    };
-};
+
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -125,4 +104,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( LogIn );
+export default connect(null, mapDispatchToProps )( LogIn );

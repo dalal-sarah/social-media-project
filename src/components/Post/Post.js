@@ -4,16 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Box from '@material-ui/core/Box';
 
 
 const post = (props) => (
     
-    <article className="Post" style={{ margin: 30, width: '100%' }}>
-        <Box display="flex" justifyContent="center">
-            <Box borderRadius={16} {...props} >
+    <article className="Post" style={{ margin: 30,textAlign:'center', width: '100%' }}>
                 <ListItem alignItems="center">
-                    <Checkbox name="index[]" value={props.id} onClick={props.cliked} />
+                    <Checkbox name="index[]" value={props.id} onClick={(event)=>{props.cliked(event)}} />
                     <div>{props.title}</div>
                 </ListItem>
 
@@ -22,6 +19,7 @@ const post = (props) => (
                     direction="row"
                     justify="center"
                     alignItems="flex-end"
+                    
 
                 >
                     <ListItem alignItems="center">
@@ -32,8 +30,6 @@ const post = (props) => (
                         </div>
                     </ListItem>
                 </Grid>
-            </Box>
-        </Box>
 
     </article>
 );

@@ -6,6 +6,7 @@ import Post from '../../components/Post/Post';
 
 // import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
+import Grid from '@material-ui/core/Grid';
 // import { makeStyles } from '@material-ui/core/styles';
 // import './Posts.css';
 
@@ -22,45 +23,29 @@ class Posts extends Component {
         ]
     }
 
-    
+
 
     componentDidMount() {
         this.props.getPosts();
 
     }
-    componentWillUpdate() {
-        return false;
-    }
-    componentWillUnmount() {
 
-    }
 
     postOnClick = (event) => {
         this.props.posts.filter((post) => {
             console.log(event.target.value, post.id)
-            if (post.id == event.target.value) {
+            if (post.id === event.target.value) {
                 // this.props.posts.users.push(localStorage.getItem('userId'));
                 this.props.updatePostUsers(localStorage.getItem('userId'), post.id);
                 console.log(this.props.posts.users);
+                return post;
             }
+            return post;
         });
     }
 
     render() {
-        const { posts, error, loading } = this.props;
-
-        // const useStyles = makeStyles((theme) => ({
-        //     root: {
-        //       width: '100%',
-        //       maxWidth: '36ch',
-        //       backgroundColor: theme.palette.background.paper,
-        //     },
-        //     inline: {
-        //       display: 'inline',
-        //     },
-        //   }));
-
-        //   const classes = useStyles();
+        const { posts, loading } = this.props;
 
         console.log('rendering posts');
         let renPosts = <p style={{ textAlign: 'center' }}>Loading ....!</p>;
@@ -68,15 +53,15 @@ class Posts extends Component {
             console.log(posts);
             renPosts = posts.map(post => {
                 return (
-                  
-                        <Post
-                            key={post.id}
-                            id={post.id}
-                            title={post.title}
-                            content={post.content}
-                            cliked={this.postOnClick}
-                        />
-                   
+
+                    <Post
+                        key={post.id}
+                        id={post.id}
+                        title={post.title}
+                        content={post.content}
+                        cliked={this.postOnClick}
+                    />
+
 
                 );
             });
@@ -85,9 +70,17 @@ class Posts extends Component {
         return (
             <div>
                 <section className="Posts">
-                    <List >
-                    {renPosts}
-                    </List>
+                    <Grid
+                        container
+                        direction="column"
+                        justify="space-between"
+                        alignItems="center"
+
+                    >
+                        <List >
+                            {renPosts}
+                        </List>
+                    </Grid>
                 </section>
             </div>
         );

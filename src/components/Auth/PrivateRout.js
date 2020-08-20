@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation'
 
 
 export const PrivateRoute = ({
@@ -11,6 +12,7 @@ export const PrivateRoute = ({
         <Route {...rest} render={(props) => (
             isAuthenticated ? (
                 <div>
+                    <Navigation {...props} />
                     <Component {...props} />
                 </div>
             ) : (

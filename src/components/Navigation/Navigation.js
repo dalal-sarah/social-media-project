@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavigationComonent from './NavigationComponent/NavigationComponent'
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 // import { withRouter, Route ,Redirect} from "react-router-dom";
@@ -50,9 +49,9 @@ class Navigation extends Component {
     }
 
      renderedComponents = this.state.pathes.map(path => (
-        <BottomNavigationAction label={path.label} >
-            <NavigationComonent link={path.path} {...this.props}> posts </NavigationComonent>
-        </BottomNavigationAction>)
+        <BottomNavigationAction label={path.label} key={path.label} to={path.path} />
+            
+        )
     );
 
     render() {

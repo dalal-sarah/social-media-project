@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 
 
 import Button from '@material-ui/core/Button'
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import Input from '@material-ui/core/Input';
 // import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -18,40 +16,6 @@ import Grid from '@material-ui/core/Grid';
 
 class Registration extends Component {
 
-  theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#115293',
-      },
-      secondary: {
-        main: '#dc004e',
-      },
-    },
-  });
-
-
-  // useStyles = makeStyles((theme) => ({
-  //   paper: {
-  //     marginTop: theme.spacing(8),
-  //     display: 'flex',
-  //     flexDirection: 'column',
-  //     alignItems: 'center',
-  //   },
-  //   avatar: {
-  //     margin: theme.spacing(1),
-  //     backgroundColor: theme.palette.secondary.main,
-  //   },
-  //   form: {
-  //     width: '50%', // Fix IE 11 issue.
-  //     marginTop: theme.spacing(1),
-  //     borderStyle: 'solid'
-  //   },
-  //   submit: {
-  //     margin: theme.spacing(3, 0, 2),
-  //   },
-  // }));
-
-  // classes = this.useStyles;
 
   constructor(props) {
     super(props);
@@ -82,7 +46,7 @@ class Registration extends Component {
 
   render() {
     return (
-      <ThemeProvider theme={this.theme}>
+     
         <div >
           <form style={{ marginTop: 100, width: '100%' }} onSubmit={(event) => { this.handleSubmit(event) }}>
             <Grid
@@ -137,7 +101,7 @@ class Registration extends Component {
             </Grid>
           </form>
         </div>
-      </ThemeProvider>
+      
     );
   }
 }

@@ -72,7 +72,6 @@ export const auth = (email, password,displayName,history) => {
         axios.post(url, authData)
             .then(response => {
                 console.log(response);
-                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
                 // dispatch(checkAuthTimeout(response.data.expiresIn));
                 history.push('/LogIn');

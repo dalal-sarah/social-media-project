@@ -42,7 +42,7 @@ const updatePostUsers = (state, action)=>{
        let posts = [...state.posts];
         var key;
         for( key in posts){
-            if(posts[key].id == action.postId){
+            if(posts[key].id === action.postId){
                 console.log(posts);
                 posts[key].users.push(action.userId);
             }

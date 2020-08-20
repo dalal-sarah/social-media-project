@@ -98,7 +98,6 @@ export const post = (post) => {
 
 export const updatePosts = (posts) => {
     return dispatch => {  
-        // let query =  '/posts.json';
 
         dispatch(updatePostsStart());
         axios.post( '/posts.json' ,post )

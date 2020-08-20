@@ -31,7 +31,6 @@ const getPostsStart = ( state, action ) => {
 };
 
 const getPostsSuccess = (state, action) => {
-    // console.log(action.posts );
     return updateObject( state, { 
         posts : action.posts,
         error: null,

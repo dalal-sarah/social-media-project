@@ -26,10 +26,6 @@ class LogIn extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // componentWillMount(){
-    //     console.log(this.props.match);
-    //     return this.props.isAuthenticated && this.props.match !== '/LogIn'
-    // }
 
     handleChange(event) {
         this.setState({
@@ -42,7 +38,6 @@ class LogIn extends Component {
         event.preventDefault();
         const { email, password } = this.state;
         this.props.logIn(email,password,this.props.history);   
-        // this.props.history.push('/posts'); 
         console.log('logged');
     }
 

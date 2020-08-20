@@ -103,12 +103,11 @@ export const logIn = (email, password, history) => {
                 localStorage.setItem('displayName',response.data.displayName);
                 dispatch(LogInSuccess());
                 dispatch(checkAuthTimeout(response.data.expiresIn));
-                // this.props.history.push('/posts'); 
                 history.push('/posts');
                                
             })
             .catch(err => {
-                // dispatch(authFail(err.response.data.error));
+                dispatch(authFail(err.response.data.error));
             });
     };
 };

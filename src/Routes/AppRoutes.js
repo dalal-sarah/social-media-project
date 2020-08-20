@@ -7,7 +7,7 @@ import LogIn from '../components/Auth/LogIn'
 import LogOut from '../components/Auth/LogOut'
 import Posts from '../containers/Posts/Posts'
 import NewPost from '../containers/NewPost/NewPost'
-import PrivateRoute from '../components/Auth/PrivateRout'
+import PrivateRoute from './PrivateRout'
 import { connect } from 'react-redux';
 
 class AppRoutes extends Component {

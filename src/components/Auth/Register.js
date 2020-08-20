@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 
@@ -38,70 +38,67 @@ class Registration extends Component {
   }
 
   handleSubmit(event) {
+    const { history } = this.props;
     event.preventDefault();
     const { email, password, displayName } = this.state;
-    this.props.onAuth(email, password, displayName , this.props.history);
+    this.props.onAuth(email, password, displayName, history);
     console.log('registerd');
   }
 
   render() {
     return (
-     
-        <div >
-          <form style={{ marginTop: 100, width: '100%' }} onSubmit={(event) => { this.handleSubmit(event) }}>
-            <Grid
-              container
-              direction="column"
-              justify="space-between"
-              alignItems="center"
 
-            >
-              <Input
-                style={{ margin: 20 }}
-                variant="outlined"
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={(event) => { this.handleChange(event) }}
-                required
-                id="standard-basic"
-                color='primary'
-              // size='small'
-              />
+      <div >
+        <form style={{ marginTop: 100, width: '100%' }} onSubmit={(event) => { this.handleSubmit(event) }}>
+          <Grid
+            container
+            direction="column"
+            justify="space-between"
+            alignItems="center"
 
-              <Input
-                style={{ margin: 20 }}
-                variant="outlined"
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={(event) => { this.handleChange(event) }}
-                required
-                id="standard-basic"
-                color='primary'
-              />
+          >
+            <Input
+              style={{ margin: 20 }}
+              variant="outlined"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={(event) => { this.handleChange(event) }}
+              required
+              color='primary'
+            />
 
-              <Input
-                style={{ margin: 20 }}
-                type="text"
-                name="displayName"
-                placeholder="displayName"
-                value={this.state.password_confirmation}
-                onChange={(event) => { this.handleChange(event) }}
-                required
-                id="standard-basic"
-                color='primary'
+            <Input
+              style={{ margin: 20 }}
+              variant="outlined"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={(event) => { this.handleChange(event) }}
+              required
+              color='primary'
+            />
 
-              />
+            <Input
+              style={{ margin: 20 }}
+              type="text"
+              name="displayName"
+              placeholder="displayName"
+              value={this.state.password_confirmation}
+              onChange={(event) => { this.handleChange(event) }}
+              required
+              color='primary'
 
-              <Button type="submit" color="secondary" style={{ margin: 20 }}>Register</Button>
-              <div> you  have an account ?<Link to='LogIn'>Log in</Link></div>
-            </Grid>
-          </form>
-        </div>
-      
+            />
+
+            <Button type="submit" color="secondary" style={{ margin: 20 }}>Register</Button>
+            <div> you  have an account ?<Link to='LogIn'>Log in</Link></div>
+          </Grid>
+        </form>
+      </div>
+
     );
   }
 }
@@ -115,7 +112,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, displayName ,history) => dispatch(actions.auth(email, password, displayName ,history))
+    onAuth: (email, password, displayName, history) => dispatch(actions.auth(email, password, displayName, history))
 
   };
 };

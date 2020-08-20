@@ -9,16 +9,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 // import RestoreIcon from '@material-ui/icons/Restore';
 
-// const useStyles = makeStyles({
-//     root: {
-//         width: 500,
-//     },
-// });
-
-
 class Navigation extends Component {
-    // classes = useStyles();
-    
 
     state = {
         pathes: [
@@ -28,30 +19,16 @@ class Navigation extends Component {
         ],
         value: 'posts'
     }
-    // componentWillMount() {
-    //     return !this.props.isAuthenticated && this.props.match !== '/LogIn'            
-    // }
-
 
     handleChange(event, newValue) {
-        // let value = () => {
-        //     this.state.pathes.filter((p) => {
-        //         if (p.path == this.props.RedirectPath)
-        //             return p
-        //         return null
-        //     });
-        // } ;
 
-        // this.setState( { value :  value } );
-        // this.props.setPath(this.state.pathes[newValue].path);
         console.log(this.state.pathes[newValue].path);
         this.props.history.push(this.state.pathes[newValue].path);
     }
 
-     renderedComponents = this.state.pathes.map(path => (
+    renderedComponents = this.state.pathes.map(path => (
         <BottomNavigationAction label={path.label} key={path.label} to={path.path} />
-            
-        )
+    )
     );
 
     render() {
@@ -67,7 +44,7 @@ class Navigation extends Component {
                     showLabels
                 >
                     {this.renderedComponents}
-             
+
                 </BottomNavigation>
             </React.Fragment>
         );

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import axios from '../../axios';
 import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Input from '@material-ui/core/Input';

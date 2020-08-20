@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
@@ -11,9 +10,9 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Input from '@material-ui/core/Input';
 
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
+// import FormControl from '@material-ui/core/FormControl';
 
 
 class LogIn extends Component {

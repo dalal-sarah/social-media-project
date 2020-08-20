@@ -9,7 +9,6 @@ import Posts from '../containers/Posts/Posts'
 import newPost from '../containers/NewPost/NewPost'
 import Navigation from '../components/Navigation/Navigation'
 import PrivateRoute from '../components/Auth/PrivateRout'
-import PublicRoute from '../components/Auth/PublicRoute'
 import { connect } from 'react-redux';
 
 class AppRoutes extends Component {

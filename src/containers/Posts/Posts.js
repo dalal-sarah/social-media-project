@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import axios from '../../axios';
-import { Route } from 'react-router-dom';
 import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux'
 
 import Post from '../../components/Post/Post';
 
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 // import './Posts.css';
 
 
@@ -51,16 +49,16 @@ class Posts extends Component {
     render() {
         const { posts, error, loading } = this.props;
 
-        const useStyles = makeStyles((theme) => ({
-            root: {
-              width: '100%',
-              maxWidth: '36ch',
-              backgroundColor: theme.palette.background.paper,
-            },
-            inline: {
-              display: 'inline',
-            },
-          }));
+        // const useStyles = makeStyles((theme) => ({
+        //     root: {
+        //       width: '100%',
+        //       maxWidth: '36ch',
+        //       backgroundColor: theme.palette.background.paper,
+        //     },
+        //     inline: {
+        //       display: 'inline',
+        //     },
+        //   }));
 
         //   const classes = useStyles();
 

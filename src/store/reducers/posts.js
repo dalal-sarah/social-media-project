@@ -1,6 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
-import { getPostsFailed } from '../actions/posts';
 
 const initialState = {
    posts : [],

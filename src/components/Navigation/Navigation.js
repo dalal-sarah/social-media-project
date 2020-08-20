@@ -1,6 +1,5 @@
-import React, { Component , Fragment} from 'react';
+import React, { Component } from 'react';
 import NavigationComonent from './NavigationComponent/NavigationComponent'
-import Auxx from '../../hoc/Auxx'
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 // import { withRouter, Route ,Redirect} from "react-router-dom";

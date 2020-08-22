@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
-// import { withRouter, Route ,Redirect} from "react-router-dom";
 
-
-// import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-// import RestoreIcon from '@material-ui/icons/Restore';
 
 class Navigation extends Component {
 
@@ -16,13 +10,13 @@ class Navigation extends Component {
             { path: '/posts', label: 'posts' },
             { path: '/newPost', label: 'new post' },
             { path: '/logOut', label: 'logOut' }
+            
         ],
         value: 'posts'
     }
 
     handleChange(event, newValue) {
-
-        console.log(this.state.pathes[newValue].path);
+        if(this.state.pathes[newValue])
         this.props.history.push(this.state.pathes[newValue].path);
     }
 
@@ -32,8 +26,7 @@ class Navigation extends Component {
     );
 
     render() {
-        console.log(this.props);
-        console.log('rendering navigation');
+        const displyName = localStorage.getItem('displayName');
         return (
             <React.Fragment>
                 <BottomNavigation
@@ -44,6 +37,7 @@ class Navigation extends Component {
                     showLabels
                 >
                     {this.renderedComponents}
+                    <BottomNavigationAction label={displyName} key={displyName}></BottomNavigationAction>
 
                 </BottomNavigation>
             </React.Fragment>
@@ -51,18 +45,6 @@ class Navigation extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        RedirectPath: state.authReducer.RedirectPath
-    };
-};
 
-const mapDispatchToProps = dispatch => {
-    return {
 
-        setPath: (path) => dispatch(actions.setRedirectPath(path))
-
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default Navigation;

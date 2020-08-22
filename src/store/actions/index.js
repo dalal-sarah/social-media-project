@@ -2,12 +2,14 @@
 export {
     auth,
     logIn,
-    logout,
-    setRedirectPath
+    logout
 } from './auth';
 
 export {
 post,
 getPosts,
-updatePostUsers
+incrementCheckedPosts,
+decrementCheckedPosts,
+updateUncheckedPosts,
+getUnCheckedPosts
 }from './posts'

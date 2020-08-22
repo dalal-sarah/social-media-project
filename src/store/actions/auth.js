@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import {history} from 'react-router-dom'
 
 import * as actionTypes from './actionTypes';
 
@@ -18,15 +17,27 @@ export const authSuccess = (token, userId) => {
     };
 };
 
+export const authFail = (error) => {
+    return {
+        type: actionTypes.AUTH_FAIL,
+        error: error
+    };
+};
+
 export const LogInSuccess = () => {
     return {
         type: actionTypes.LOGIN_SUCCESS
     };
 };
 
-export const authFail = (error) => {
+export const LogInStart = () => {
     return {
-        type: actionTypes.AUTH_FAIL,
+        type: actionTypes.LOGIN_START
+    };
+};
+export const LogInFailed = (error) => {
+    return {
+        type: actionTypes.LOGIN_FAILED,
         error: error
     };
 };
@@ -36,10 +47,10 @@ export const logout = () => {
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userId');
     localStorage.removeItem('displayName');
-    console.log('out');
+    localStorage.removeItem('lastLogIn');
     return {
         type: actionTypes.AUTH_LOGOUT,
-        isAuth : false
+        isAuth: false
     };
 };
 
@@ -51,14 +62,26 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
-export const setRedirectPath = (path) => {
+export const setLastLogInStart = () => {
     return {
-        type: actionTypes.SET_REDIRECT_PATH,
-        path: path
+        type: actionTypes.SET_LAST_LOGIN_START
     };
-};
+}
 
-export const auth = (email, password,displayName,history) => {
+export const setLastLogInSuccess = () => {
+    return {
+        type: actionTypes.SET_LAST_LOGIN_SUCCESS
+    };
+}
+
+export const setLastLogInFailed = (error) => {
+    return {
+        type: actionTypes.SET_LAST_LOGIN_FAILED,
+        error: error
+    };
+}
+
+export const auth = (email, password, displayName, history) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -68,46 +91,59 @@ export const auth = (email, password,displayName,history) => {
             returnSecureToken: true
         };
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDuhXnx0Dz_nD1C_aZJ0x58sOGAgfIZtCc';
-        
         axios.post(url, authData)
             .then(response => {
-                console.log(response);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
-                // dispatch(checkAuthTimeout(response.data.expiresIn));
+                dispatch(checkAuthTimeout(response.data.expiresIn));
                 history.push('/LogIn');
             })
             .catch(err => {
                 dispatch(authFail(err.response.data.error));
             });
     };
-    
+
 };
 
 export const logIn = (email, password, history) => {
     return dispatch => {
-        dispatch(authStart());
+        dispatch(LogInStart());
         const authData = {
             email: email,
             password: password,
             returnSecureToken: true
         };
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDuhXnx0Dz_nD1C_aZJ0x58sOGAgfIZtCc';
-        
         axios.post(url, authData)
             .then(response => {
-                console.log(response);
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userId', response.data.localId);
-                localStorage.setItem('displayName',response.data.displayName);
+                localStorage.setItem('displayName', response.data.displayName);
                 dispatch(LogInSuccess());
                 dispatch(checkAuthTimeout(response.data.expiresIn));
-                history.push('/posts');
-                               
+                dispatch(getLastLogIn(response.data.idToken, history));
             })
             .catch(err => {
-                dispatch(authFail(err.response.data.error));
+                dispatch(LogInFailed(err.response.data.error));
             });
     };
 };
+
+export const getLastLogIn = (idToken, history) => {
+    return dispatch => {
+        dispatch(setLastLogInStart())
+        const data = { 'idToken': idToken };
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDuhXnx0Dz_nD1C_aZJ0x58sOGAgfIZtCc'
+        axios.post(url, data)
+            .then(response => {
+                const lastLogin = response.data.users[0].lastLoginAt;
+                console.log("last LogIn for user " + localStorage['displayName'] + "", lastLogin);
+                localStorage.setItem('lastLogIn', lastLogin / 1000);
+                dispatch(setLastLogInSuccess());
+                history.push('/posts');
+            }).catch(error => {
+                dispatch(setLastLogInFailed(error))
+            });
+    }
+}

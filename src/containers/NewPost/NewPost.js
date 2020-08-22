@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux'
+
 import Button from '@material-ui/core/Button'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Grid from '@material-ui/core/Grid';
 
-
 class NewPost extends Component {
+    
     state = {
         title: '',
         content: '',
@@ -22,18 +23,16 @@ class NewPost extends Component {
             title: this.state.title,
             content: this.state.content,
             userId: localStorage.getItem('userId'),
+            time:new Date().getTime()/1000,
             users: this.state.users
         };
-
-        this.props.post(data);
-        console.log(data);
+        this.props.post(data);  
     }
 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
-        });
-        console.log(this.state.email);
+        });   
     }
 
     render() {
@@ -67,9 +66,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
         post: (data) => dispatch(actions.post(data))
-
     };
 };
 

@@ -1,0 +1,30 @@
+.counter{
+    text-align: center;
+    /* height: 4rem; */
+    font-size: medium;
+    width: 40%;
+    color: #dc004e;
+    margin: 30px;
+    background-color: #f3f3f5;
+    border-radius: 10px;
+    /* box-shadow: 0 5px 8px #ccc; */
+    padding:  20px 0;
+    /* border-radius: 10px; */
+    /* border-bottom: 1px solid black; */
+  }
+  
+  .checked{
+      padding : 0 7px;
+    text-align: center;
+    height: 4rem;
+    font-size: medium;
+    width: 100%;
+    margin: auto;
+  }
+  .unChecked{
+    text-align: center;
+    height: 4rem;
+    font-size: medium;
+    width: 100%;
+    margin: 1rem;
+  }

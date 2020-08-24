@@ -3,7 +3,11 @@ export {
     auth,
     logIn,
     logout
-    // ,
-    // setAuthRedirectPath,
-    // authCheckState
 } from './auth';
+
+export {
+post,
+getPosts,
+updateCheckedPosts,
+putPostsToServer
+}from './posts'

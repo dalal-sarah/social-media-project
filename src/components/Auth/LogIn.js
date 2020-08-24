@@ -1,63 +1,47 @@
 import React, { Component } from "react";
-import axios from "axios";
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
-
-
+import {Link} from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import Input from '@material-ui/core/Input';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
 
+import classes from './css/LogIn.module.css'
 
 class LogIn extends Component {
 
-    theme = createMuiTheme({
-        palette: {
-            primary: {
-                main: '#115293',
-            },
-            secondary: {
-                main: '#dc004e',
-            },
-        },
-    });
+  
 
     constructor(props) {
         super(props);
-
         this.state = {
             email: "",
             password: "",
             LogInErrors: ""
-        };
-
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
-        console.log(this.state.email);
     }
 
     handleSubmit(event) {
         event.preventDefault();
         const { email, password } = this.state;
-        this.props.logIn(email,password);   
-        this.props.history.push('/posts'); 
-        console.log('logged');
+        const { logIn , history} = this.props  ;
+        logIn(email,password,history);   
+        
     }
 
-    render() {
-        return (
-            <ThemeProvider theme={this.theme}>
+    render() {    
+        return (  
                 <div>
-                    <form style={{ marginTop: 100, width: '100%' }} onSubmit={(event) => { this.handleSubmit(event) }}>
+                    <form  onSubmit={this.handleSubmit }
+                    className={classes.form}>
                         <Grid
                             container
                             direction="column"
@@ -66,53 +50,45 @@ class LogIn extends Component {
 
                         >
                             <Input
-                                style={{ margin: 20 }}
                                 type="email"
                                 name="email"
                                 placeholder="Email"
                                 value={this.state.email}
                                 onChange={(event) => { this.handleChange(event) }}
                                 required
-                                id="standard-basic"
                                 color='primary'
                                 variant="outlined"
+                                key='email'
+                                className={classes.input}
                             />
 
                             <Input
-                                style={{ margin: 20 }}
                                 type="password"
                                 name="password"
                                 placeholder="Password"
                                 value={this.state.password}
                                 onChange={(event) => { this.handleChange(event) }}
                                 required
-                                id="standard-basic"
                                 color='primary'
+                                key='password'
+                                className={classes.input}
                             />
 
-                            <Button type="submit" color="secondary">LogIn</Button>
-                            <div> you dont have an account ?<a href='/Register'> Sign up</a></div>
+                            <Button className={classes.submit} type="submit" color="secondary">LogIn</Button>
+                            <div> you dont have an account ?<Link to='/Register'> Sign up</Link></div>
                         </Grid>
                     </form>
-                </div>
-            </ThemeProvider>
+                </div>   
         );
     }
 }
-const mapStateToProps = state => {
-    return {
-        loading: state.loading,
-        error: state.error,
-        isAuthenticated: state.token !== null,
-    };
-};
 
 const mapDispatchToProps = dispatch => {
     return {
          
-         logIn: ( email, password ) => dispatch( actions.logIn( email, password ) )
+         logIn: ( email, password ,history ) => dispatch( actions.logIn( email, password,history ) )
 
     };
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( LogIn );
+export default connect(null, mapDispatchToProps )( LogIn );

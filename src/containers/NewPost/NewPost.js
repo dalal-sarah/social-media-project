@@ -1,39 +1,78 @@
 import React, { Component } from 'react';
-import axios from '../../axios';
-import { Redirect } from 'react-router-dom';
+import * as actions from '../../store/actions/index'
+import { connect } from 'react-redux'
 
-// import './NewPost.css';
+import Button from '@material-ui/core/Button'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Input from '@material-ui/core/Input';
+import Grid from '@material-ui/core/Grid';
+
+import classes from './NewPost.module.css';
 
 class NewPost extends Component {
-    state = {
-        title: '',
-        content: '',
-        submitted: false
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            content: '',
+            userId: localStorage.getItem('userId'),
+            users: [''],
+            submitted: false
+        }
     }
 
-    postDataHandler = () => {
-        const data = {
-            title: this.state.title,
-            body: this.state.content,
-        };
-        axios.post( '/posts', data )
-            .then( response => {
-                console.log( response );
-            } );
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
     }
 
-    render () {
+    render() {
 
+        this.postDataHandler = () => {
+            const {post} = this.props;
+            const data = {
+                title: this.state.title,
+                content: this.state.content,
+                userId: localStorage.getItem('userId'),
+                time: new Date().getTime() / 1000,
+                users: this.state.users
+            };
+        post(data);
+        }
         return (
-            <div className="NewPost">
-                {/* {redirect} */}
-                <h1>Add a Post</h1>
-                {/* <label>Content</label> */}
-                <textarea rows="10" value={this.state.content} onChange={( event ) => this.setState( { content: event.target.value } )} />
-                <button onClick={this.postDataHandler}>Post</button>
+            <div className={classes.newPost}>
+                <Grid
+                    container
+                    direction="column"
+                    justify="space-between"
+                    alignItems="center"
+
+                >
+                    <h1 className={classes.addPost}>Add a Post</h1>
+                    <h4 className={classes.label}>title : </h4>
+                    <Input className={classes.input} type='text' name='title' onChange={(event) => { this.handleChange(event) }} />
+                    <h4 className={classes.label}>content : </h4>
+                    <TextareaAutosize className={classes.content} rows="10" name='content' value={this.state.content} onChange={(event) => { this.handleChange(event) }} />
+                    <Button className={classes.submit} onClick={this.postDataHandler} color='secondary' >Post</Button>
+                </Grid>
             </div>
         );
     }
 }
 
-export default NewPost;
+const mapStateToProps = state => {
+    return {
+
+        error: state.postsReducer.error
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        post: (newPost) => dispatch(actions.post(newPost))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPost);

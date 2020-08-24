@@ -35,10 +35,6 @@ class Posts extends Component {
             this.updateUnCheckedPosts();
     }
 
-    // shouldComponentUpdate() {
-    //     return !this.props.postsFetched 
-    // }
-
     componentWillUnmount() {
         const { posts, putPostsToServer } = this.props ;
         putPostsToServer(posts);
@@ -70,16 +66,7 @@ class Posts extends Component {
         })
     }
 
-    checkBoxOnClick = (event)  => {
-        const { updatecheckedPosts } = this.props;
-        if (event.target.checked) {
-            this.incrementCheckedPosts();
-        }
-        else {
-            this.decrementCheckedPosts();
-        }
-        updatecheckedPosts(event.target.id);
-    }
+  
 
     CheckboxOnChangeHandler (event)  {
         const { posts } = this.props ;
@@ -98,6 +85,18 @@ class Posts extends Component {
 
 
     render() {
+
+        this.checkBoxOnClick = (event)  => {
+            const { updatecheckedPosts } = this.props;
+            if (event.target.checked) {
+                this.incrementCheckedPosts();
+            }
+            else {
+                this.decrementCheckedPosts();
+            }
+            updatecheckedPosts(event.target.id);
+        }
+
         const { posts, loading } = this.props;
         let renPosts = <p style={{ textAlign: 'center' }}>Loading ....!</p>;
         this.numberOfcheckedPosts = 0;

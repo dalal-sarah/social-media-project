@@ -44,7 +44,7 @@ class Posts extends Component {
         putPostsToServer(posts);
     }
 
-    incrementCheckedPosts = () => {
+    incrementCheckedPosts  () {
         this.setState(
             {
                 unCheckedPosts: this.state.unCheckedPosts - 1,
@@ -53,7 +53,7 @@ class Posts extends Component {
         )
     }
 
-    decrementCheckedPosts = () => {
+    decrementCheckedPosts ()  {
         this.setState(prevState => {
             return {
                 unCheckedPosts: prevState.unCheckedPosts + 1,
@@ -61,7 +61,7 @@ class Posts extends Component {
             }
         })
     }
-    incrementUnCheckedPosts = () => {
+    incrementUnCheckedPosts () {
         this.setState(prevState => {
             return {
                 unCheckedPosts: prevState.unCheckedPosts - 1,
@@ -70,7 +70,7 @@ class Posts extends Component {
         })
     }
 
-    checkBoxOnClick = (event) => {
+    checkBoxOnClick = (event)  => {
         const { updatecheckedPosts } = this.props;
         if (event.target.checked) {
             this.incrementCheckedPosts();
@@ -81,14 +81,14 @@ class Posts extends Component {
         updatecheckedPosts(event.target.id);
     }
 
-    CheckboxOnChangeHandler = (event) => {
+    CheckboxOnChangeHandler (event)  {
         const { posts } = this.props ;
         this.setState({
             [event.target.id]: !posts[event.target.id].users.includes(this.state.userId)
         })
     }
 
-    updateUnCheckedPosts = () => {
+    updateUnCheckedPosts  (){
         const { posts } = this.props;
         this.setState({
             checkedPosts: this.numberOfcheckedPosts,

@@ -3,7 +3,7 @@ import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux'
 
 import Post from '../../components/Post/Post';
-import CheckedCounter from '../../components/CheckedCounter'
+import CheckedCounter from '../../CheckedCounter/CheckedCounter'
 
 import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';

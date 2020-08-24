@@ -1,0 +1,24 @@
+.item{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    height: 4rem;
+    font-size: larger;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 1px 1px #115293;
+    
+  }
+  .useritem{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    height: 4rem;
+    font-size: larger;
+    position: fixed;
+    top: 0;
+    width: 5vw; 
+    box-shadow: 0 1px 1px #115293;
+    
+  }

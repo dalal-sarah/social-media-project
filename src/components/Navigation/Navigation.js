@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
+import classes from './Navigation.module.css'
+
 class Navigation extends Component {
 
     constructor(props) {
@@ -29,7 +31,7 @@ class Navigation extends Component {
     render() {
         const displyName = localStorage.getItem('displayName');
         const renderedComponents = this.state.pathes.map(path => (
-            <BottomNavigationAction label={path.label} key={path.label} to={path.path} />
+            <BottomNavigationAction className={classes.item} label={path.label} key={path.label} to={path.path} />
         )
         );
         return (
@@ -42,7 +44,7 @@ class Navigation extends Component {
                     showLabels
                 >
                     {renderedComponents}
-                    <BottomNavigationAction label={displyName} key={displyName}></BottomNavigationAction>
+                    <BottomNavigationAction className={classes.useritem} label={displyName} key={displyName}></BottomNavigationAction>
 
                 </BottomNavigation>
             </React.Fragment>

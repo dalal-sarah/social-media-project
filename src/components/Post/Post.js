@@ -4,11 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import classes from './posts.module.css'
 
 const post = (props) => (
     
-    <article className="Post" style={{ margin: 30,textAlign:'center', width: '100%' }}>
-                <ListItem alignItems="center">
+    <article className={classes.post}>
+                <ListItem alignItems="center" className={classes.title}>
                     {props.children}
                     <div>{props.title}</div>
                 </ListItem>
@@ -21,12 +22,10 @@ const post = (props) => (
                     
 
                 >
-                    <ListItem alignItems="center">
-                        <div className="Info">
+                    <ListItem alignItems="center" className={classes.content}>
                             <ListItemText>
                                 <div className="content">{props.content}</div>
                             </ListItemText>
-                        </div>
                     </ListItem>
                 </Grid>
 

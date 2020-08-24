@@ -1,0 +1,23 @@
+
+  .form {
+    border: 2px #115293 solid;
+    margin: auto;
+    margin-top: 5rem;
+    padding:5% 3% ;
+    width: 50vw;
+    box-shadow: 0 5px 8px #ccc;
+    text-align: center;
+    border-radius: 30px;
+    background-color: #f3f3f5;
+  }
+  .submit {
+    margin: 10px ;
+    width: 15vw;
+    height: 5vw;    
+  }
+  .input {
+    text-align: center;
+    width: 30vw;
+    margin: 1rem;
+    padding: 1%;
+  }

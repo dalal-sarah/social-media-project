@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 
+import classes from './css/LogIn.module.css'
+
 class Registration extends Component {
 
   constructor(props) {
@@ -38,7 +40,7 @@ class Registration extends Component {
   render() {
     return (
       <div >
-        <form style={{ marginTop: 100, width: '100%' }} onSubmit={(event) => { this.handleSubmit(event) }}>
+        <form className={classes.form} onSubmit={(event) => { this.handleSubmit(event) }}>
           <Grid
             container
             direction="column"
@@ -48,7 +50,7 @@ class Registration extends Component {
           >
 
             <Input
-              style={{ margin: 20 }}
+              className={classes.input}
               variant="outlined"
               type="email"
               name="email"
@@ -60,7 +62,7 @@ class Registration extends Component {
             />
 
             <Input
-              style={{ margin: 20 }}
+              className={classes.input}
               variant="outlined"
               type="password"
               name="password"
@@ -72,7 +74,7 @@ class Registration extends Component {
             />
 
             <Input
-              style={{ margin: 20 }}
+              className={classes.input}
               type="text"
               name="displayName"
               placeholder="displayName"

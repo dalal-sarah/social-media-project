@@ -5,8 +5,9 @@ import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import Grid from '@material-ui/core/Grid';
+
+import classes from './NewPost.module.css';
 
 class NewPost extends Component {
 
@@ -41,7 +42,7 @@ class NewPost extends Component {
         post(data);
         }
         return (
-            <div className="NewPost">
+            <div className={classes.newPost}>
                 <Grid
                     container
                     direction="column"
@@ -49,12 +50,12 @@ class NewPost extends Component {
                     alignItems="center"
 
                 >
-                    <h1>Add a Post</h1>
-                    <InputLabel>title : </InputLabel>
-                    <Input type='text' name='title' onChange={(event) => { this.handleChange(event) }} />
-                    <InputLabel style={{ marginTop: 25, marginBottom: 25, width: '100%' }}>content : </InputLabel>
-                    <TextareaAutosize rows="10" name='content' value={this.state.content} onChange={(event) => { this.handleChange(event) }} />
-                    <Button onClick={this.postDataHandler}>Post</Button>
+                    <h1 className={classes.addPost}>Add a Post</h1>
+                    <h4 className={classes.label}>title : </h4>
+                    <Input className={classes.input} type='text' name='title' onChange={(event) => { this.handleChange(event) }} />
+                    <h4 className={classes.label}>content : </h4>
+                    <TextareaAutosize className={classes.content} rows="10" name='content' value={this.state.content} onChange={(event) => { this.handleChange(event) }} />
+                    <Button className={classes.submit} onClick={this.postDataHandler} color='secondary' >Post</Button>
                 </Grid>
             </div>
         );

@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 
-
+import classes from './css/LogIn.module.css'
 
 class LogIn extends Component {
 
@@ -40,7 +40,8 @@ class LogIn extends Component {
     render() {    
         return (  
                 <div>
-                    <form style={{ marginTop: 100, width: '100%' }} onSubmit={this.handleSubmit }>
+                    <form  onSubmit={this.handleSubmit }
+                    className={classes.form}>
                         <Grid
                             container
                             direction="column"
@@ -49,7 +50,6 @@ class LogIn extends Component {
 
                         >
                             <Input
-                                style={{ margin: 20 }}
                                 type="email"
                                 name="email"
                                 placeholder="Email"
@@ -59,10 +59,10 @@ class LogIn extends Component {
                                 color='primary'
                                 variant="outlined"
                                 key='email'
+                                className={classes.input}
                             />
 
                             <Input
-                                style={{ margin: 20 }}
                                 type="password"
                                 name="password"
                                 placeholder="Password"
@@ -71,9 +71,10 @@ class LogIn extends Component {
                                 required
                                 color='primary'
                                 key='password'
+                                className={classes.input}
                             />
 
-                            <Button type="submit" color="secondary">LogIn</Button>
+                            <Button className={classes.submit} type="submit" color="secondary">LogIn</Button>
                             <div> you dont have an account ?<Link to='/Register'> Sign up</Link></div>
                         </Grid>
                     </form>

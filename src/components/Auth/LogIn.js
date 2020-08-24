@@ -32,7 +32,7 @@ class LogIn extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const { email, password } = this.state;
-        const { logIn , history} = this.props ? this.props : null ;
+        const { logIn , history} = this.props  ;
         logIn(email,password,history);   
         
     }

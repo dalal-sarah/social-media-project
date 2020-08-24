@@ -28,7 +28,7 @@ class Registration extends Component {
   }
 
   handleSubmit(event) {
-    const { history, onAuth } = this.props ? this.props : null;
+    const { history, onAuth } = this.props ;
     event.preventDefault();
     const { email, password, displayName } = this.state;
     onAuth(email, password, displayName, history);

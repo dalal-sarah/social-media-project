@@ -30,7 +30,7 @@ class NewPost extends Component {
     render() {
 
         this.postDataHandler = () => {
-            const {post} = this.props ? this.props : null ;
+            const {post} = this.props;
             const data = {
                 title: this.state.title,
                 content: this.state.content,

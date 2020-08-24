@@ -64,12 +64,14 @@ const updatePostUsers = (state, action) => {
     let posts = state.posts;
     posts.map((post) => {
         if (post.id === action.postId) {
-            const index = post.users.indexOf(action.userId);
+            const index = post.users.indexOf(userid);
             index >= 0 ? post.users.splice(index, 1) : post.users.push(userid);
             return true;
         }
         return false;
+
     });
+    console.log(state.posts)
     return updateObject(state, {
         posts: state.posts
     });

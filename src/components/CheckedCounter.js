@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 class CheckedCounter extends Component {
 
     render() {
-        const {checked , unChecked} = this.props ? this.props : null ;
+        const {checked , unChecked} = this.props ;
         return (
             <Grid
                 container

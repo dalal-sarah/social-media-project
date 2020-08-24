@@ -21,7 +21,7 @@ class Navigation extends Component {
     }
 
     handleChange(event, newValue) {
-        const {history} = this.props ? this.props : null ;
+        const {history} = this.props ;
         if (this.state.pathes[newValue])
             history.push(this.state.pathes[newValue].path);
     }

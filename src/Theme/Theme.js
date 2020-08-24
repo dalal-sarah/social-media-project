@@ -15,7 +15,7 @@ class Theme extends Component {
                 },
             },
         });
-        const {children} = this.props ? this.props : null;
+        const {children} = this.props;
         return (
             <ThemeProvider  theme={theme}>
                 {children}

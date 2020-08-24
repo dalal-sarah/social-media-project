@@ -15,20 +15,24 @@ class Posts extends Component {
         super(props);
         this.state = {
             unCheckedPosts: -1,
-            checkedPosts: 0
+            checkedPosts: 0,
+            postId: true,
+            userId : localStorage.getItem('userId')
         }
     }
 
+
+
     componentDidMount() {
-        const { getPosts } = this.props ? this.props : null;
+        const { getPosts } = this.props;
         getPosts();
-        
+
     }
-    
-    componentDidUpdate(){
-        const {postsFetched} = this.props ? this.props : null ;
-            if (postsFetched && this.state.unCheckedPosts < 0)
-               this.updateUnCheckedPosts();
+
+    componentDidUpdate() {
+        const { postsFetched } = this.props;
+        if (postsFetched && this.state.unCheckedPosts < 0)
+            this.updateUnCheckedPosts();
     }
 
     // shouldComponentUpdate() {
@@ -36,78 +40,87 @@ class Posts extends Component {
     // }
 
     componentWillUnmount() {
-        const { posts, putPostsToServer } = this.props ? this.props : null;
+        const { posts, putPostsToServer } = this.props ;
         putPostsToServer(posts);
+    }
+
+    incrementCheckedPosts = () => {
+        this.setState(
+            {
+                unCheckedPosts: this.state.unCheckedPosts - 1,
+                checkedPosts: this.state.checkedPosts + 1
+            }
+        )
+    }
+
+    decrementCheckedPosts = () => {
+        this.setState(prevState => {
+            return {
+                unCheckedPosts: prevState.unCheckedPosts + 1,
+                checkedPosts: prevState.checkedPosts - 1
+            }
+        })
+    }
+    incrementUnCheckedPosts = () => {
+        this.setState(prevState => {
+            return {
+                unCheckedPosts: prevState.unCheckedPosts - 1,
+                checkedPosts: prevState.checkedPosts + 1
+            }
+        })
+    }
+
+    checkBoxOnClick = (event) => {
+        const { posts, updatecheckedPosts } = this.props;
+        if (event.target.checked) {
+            this.incrementCheckedPosts();
+        }
+        else {
+            this.decrementCheckedPosts();
+        }
+        updatecheckedPosts(event.target.id);
+        console.log(posts);
+    }
+
+    CheckboxOnChangeHandler = (event) => {
+        const { posts } = this.props ;
+        this.setState({
+            [event.target.id]: !posts[event.target.id].users.includes(this.state.userId)
+        })
+    }
+
+    updateUnCheckedPosts = () => {
+        const { posts } = this.props;
+        this.setState({
+            checkedPosts: this.numberOfcheckedPosts,
+            unCheckedPosts: posts.length - this.numberOfcheckedPosts
+        })
     }
 
 
     render() {
-
-        this.incrementCheckedPosts = () => {
-            this.setState(
-                {
-                    unCheckedPosts: this.state.unCheckedPosts - 1,
-                    checkedPosts: this.state.checkedPosts + 1
-                }
-            )
-        }
-
-        this.decrementCheckedPosts = () => {
-            this.setState(
-                {
-                    unCheckedPosts: this.state.unCheckedPosts + 1,
-                    checkedPosts: this.state.checkedPosts - 1
-                }
-            )
-        }
-        this.incrementUnCheckedPosts = () => {
-            this.setState(
-                {
-                    unCheckedPosts: this.state.unCheckedPosts + 1
-                }
-            )
-        }
-
-        this.checkBoxOnClick = (event) => {
-            const { updatecheckedPosts } = this.props ? this.props : null;
-            if (event.target.checked) {
-                this.incrementCheckedPosts();
-            }
-            else {
-                this.decrementCheckedPosts();
-            }
-            updatecheckedPosts(event.target.id)
-        }
-
-        this.updateUnCheckedPosts = () =>{
-            this.setState({
-                unCheckedPosts: this.numberOfUncheckedPosts
-            })
-        }
-
-        const { posts, loading } = this.props ? this.props : null;
-        var renPosts = <p style={{ textAlign: 'center' }}>Loading ....!</p>;
-        this.numberOfUncheckedPosts = 0;
+        const { posts, loading } = this.props;
+        let renPosts = <p style={{ textAlign: 'center' }}>Loading ....!</p>;
+        this.numberOfcheckedPosts = 0;
         if (!loading) {
-            const userId = localStorage.getItem('userId');
             renPosts = posts.map(post => {
-                if (!post.users.includes(userId)) {
-                    this.numberOfUncheckedPosts++;
-                    return (
-                        <Post
-                            key={post.id}
-                            id={post.id}
-                            title={post.title}
-                            content={post.content}
-                        >
-                            <Checkbox key={post.id} name="" id={post.id} value="" onClick={this.checkBoxOnClick} />
-                        </Post>
-                    );
-                }
-                return false;
+                let checked = post.users.includes(this.state.userId);
+                if (checked)
+                    this.numberOfcheckedPosts++
+
+                return (
+                    <Post
+                        key={post.id}
+                        id={post.id}
+                        title={post.title}
+                        content={post.content}
+                    >
+                        <Checkbox key={post.id} checked={checked} name="" id={post.id} value="" onClick={this.checkBoxOnClick} />
+                    </Post>
+                );
             });
 
-           
+
         }
 
         return (

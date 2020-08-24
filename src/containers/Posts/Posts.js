@@ -71,7 +71,7 @@ class Posts extends Component {
     }
 
     checkBoxOnClick = (event) => {
-        const { posts, updatecheckedPosts } = this.props;
+        const { updatecheckedPosts } = this.props;
         if (event.target.checked) {
             this.incrementCheckedPosts();
         }

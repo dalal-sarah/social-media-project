@@ -16,7 +16,6 @@
     "react-thunk": "^1.0.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"
-    
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.7.0",
     "eslint-plugin-react": "^7.20.6"
   }

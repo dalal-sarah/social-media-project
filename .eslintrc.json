@@ -22,8 +22,11 @@
         "react"
     ],
     "rules": {
-      
+      "react/prop-types" : "off"
     },
+    
+        "parser":"babel-eslint"
+     ,
     "ignorePatterns": [
         "*.css",
         "*.test.js",

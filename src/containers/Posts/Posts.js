@@ -79,7 +79,6 @@ class Posts extends Component {
             this.decrementCheckedPosts();
         }
         updatecheckedPosts(event.target.id);
-        console.log(posts);
     }
 
     CheckboxOnChangeHandler = (event) => {

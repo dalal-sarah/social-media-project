@@ -71,7 +71,6 @@ const updatePostUsers = (state, action) => {
         return false;
 
     });
-    console.log(state.posts)
     return updateObject(state, {
         posts: state.posts
     });

@@ -24,6 +24,7 @@ class Posts extends Component {
         getPosts();
         
     }
+    
     componentDidUpdate(){
         const {postsFetched} = this.props ? this.props : null ;
             if (postsFetched && this.state.unCheckedPosts < 0)
@@ -42,7 +43,6 @@ class Posts extends Component {
 
     render() {
 
-        console.log('rendering posts');
         this.incrementCheckedPosts = () => {
             this.setState(
                 {
@@ -50,7 +50,6 @@ class Posts extends Component {
                     checkedPosts: this.state.checkedPosts + 1
                 }
             )
-            console.log(this.state);
         }
 
         this.decrementCheckedPosts = () => {
@@ -60,10 +59,8 @@ class Posts extends Component {
                     checkedPosts: this.state.checkedPosts - 1
                 }
             )
-            console.log(this.state);
         }
         this.incrementUnCheckedPosts = () => {
-            console.log('incrementUnCheckedPosts ');
             this.setState(
                 {
                     unCheckedPosts: this.state.unCheckedPosts + 1
@@ -72,7 +69,6 @@ class Posts extends Component {
         }
 
         this.checkBoxOnClick = (event) => {
-            console.log(event.target.id);
             const { updatecheckedPosts } = this.props ? this.props : null;
             if (event.target.checked) {
                 this.incrementCheckedPosts();
@@ -80,7 +76,6 @@ class Posts extends Component {
             else {
                 this.decrementCheckedPosts();
             }
-
             updatecheckedPosts(event.target.id)
         }
 
@@ -89,7 +84,7 @@ class Posts extends Component {
                 unCheckedPosts: this.numberOfUncheckedPosts
             })
         }
-        
+
         const { posts, loading } = this.props ? this.props : null;
         var renPosts = <p style={{ textAlign: 'center' }}>Loading ....!</p>;
         this.numberOfUncheckedPosts = 0;

@@ -41,7 +41,6 @@ export const getPostsFailed = (error) => {
 };
 
 export const updateCheckedPosts = (postId) => {
-    console.log(postId);
     return {
         type: actionTypes.UPDATE_CHECKED_POSTS,
         postId: postId
@@ -70,12 +69,9 @@ export const putPostsToServerFailed = (error) => {
 
 export const getPosts = () => {
     return dispatch => {
-        const time = localStorage['lastLogIn'];
-        console.log('lastLogIn', time);
         dispatch(getPostsStart())
         axios.get(`https://social-media-project-535bc.firebaseio.com/posts.json`)
             .then(response => {
-                console.log(response.data);
                 const fetchedPosts = [];
                 for (let key in response.data) {
                     fetchedPosts.push({
@@ -85,7 +81,6 @@ export const getPosts = () => {
                     });
                 }
                 dispatch(getPostsSuccess(fetchedPosts));
-                // dispatch(getUnCheckedPosts());
             })
             .catch(error => {
                 dispatch(getPostsFailed(error));

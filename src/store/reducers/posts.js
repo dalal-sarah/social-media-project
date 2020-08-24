@@ -60,7 +60,6 @@ const putPostsToServerFailed = (state, action) => {
 };
 
 const updatePostUsers = (state, action) => {
-    console.log('updatePostUsers');
     const userid = localStorage.getItem('userId');
     let posts = state.posts;
     posts.map((post) => {
@@ -71,7 +70,6 @@ const updatePostUsers = (state, action) => {
         }
         return false;
     });
-    console.log(state.posts);
     return updateObject(state, {
         posts: state.posts
     });

@@ -13,7 +13,7 @@ export const authSuccess = (token, userId) => {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
         userId: userId,
-        isAuth: localStorage['token'] != null
+        isAuth: localStorage.getItem('token')!= null
     };
 };
 

@@ -9,33 +9,37 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Grid from '@material-ui/core/Grid';
 
 class NewPost extends Component {
-    
-    state = {
-        title: '',
-        content: '',
-        userId: localStorage.getItem('userId'),
-        users: [''],
-        submitted: false
-    }
 
-    postDataHandler = () => {
-        const data = {
-            title: this.state.title,
-            content: this.state.content,
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            content: '',
             userId: localStorage.getItem('userId'),
-            time:new Date().getTime()/1000,
-            users: this.state.users
-        };
-        this.props.post(data);  
+            users: [''],
+            submitted: false
+        }
     }
 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
-        });   
+        });
     }
 
     render() {
+
+        this.postDataHandler = () => {
+            const {post} = this.props ? this.props : null ;
+            const data = {
+                title: this.state.title,
+                content: this.state.content,
+                userId: localStorage.getItem('userId'),
+                time: new Date().getTime() / 1000,
+                users: this.state.users
+            };
+        post(data);
+        }
         return (
             <div className="NewPost">
                 <Grid
@@ -48,7 +52,7 @@ class NewPost extends Component {
                     <h1>Add a Post</h1>
                     <InputLabel>title : </InputLabel>
                     <Input type='text' name='title' onChange={(event) => { this.handleChange(event) }} />
-                    <InputLabel style={{ marginTop: 25,marginBottom: 25, width: '100%' }}>content : </InputLabel>
+                    <InputLabel style={{ marginTop: 25, marginBottom: 25, width: '100%' }}>content : </InputLabel>
                     <TextareaAutosize rows="10" name='content' value={this.state.content} onChange={(event) => { this.handleChange(event) }} />
                     <Button onClick={this.postDataHandler}>Post</Button>
                 </Grid>
@@ -66,7 +70,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        post: (data) => dispatch(actions.post(data))
+        post: (newPost) => dispatch(actions.post(newPost))
     };
 };
 

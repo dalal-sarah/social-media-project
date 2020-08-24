@@ -9,12 +9,16 @@ import Grid from '@material-ui/core/Grid';
 
 class Registration extends Component {
 
-  state = {
-    email: "",
-    password: "",
-    displayName: "",
-    registrationErrors: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      displayName: "",
+      registrationErrors: ""
+    };
+  }
+
 
   handleChange(event) {
     this.setState({
@@ -24,10 +28,10 @@ class Registration extends Component {
   }
 
   handleSubmit(event) {
-    const { history } = this.props;
+    const { history, onAuth } = this.props ? this.props : null;
     event.preventDefault();
     const { email, password, displayName } = this.state;
-    this.props.onAuth(email, password, displayName, history);
+    onAuth(email, password, displayName, history);
 
   }
 

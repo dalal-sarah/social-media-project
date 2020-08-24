@@ -1,20 +1,19 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
-import { getPostsFailed } from '../actions/posts';
+
 
 const initialState = {
     posts: [],
     loading: false,
     error: null,
-    checkedPots: 0,
-    unCheckedPosts: 0
+    postsFetched: false
 };
 
-const postStart = (state, action) => {
+const postStart = (state) => {
     return updateObject(state, { error: null, loading: true });
 };
 
-const postSuccess = (state, action) => {
+const postSuccess = (state) => {
     return updateObject(state, {
         error: null,
         loading: false
@@ -28,8 +27,8 @@ const postFail = (state, action) => {
     });
 };
 
-const getPostsStart = (state, action) => {
-    return updateObject(state, { error: null, loading: true });
+const getPostsStart = (state) => {
+    return updateObject(state, { error: null, loading: true, postsFetched: false });
 };
 
 const getPostsSuccess = (state, action) => {
@@ -37,46 +36,47 @@ const getPostsSuccess = (state, action) => {
         posts: action.posts,
         error: null,
         loading: false,
-        unCheckedPosts: action.posts.length,
-        checkedPots: 0
+        postsFetched: true
     });
 };
 
-const incrementCheckedPosts = (state, action) => {
-    return updateObject(state, { checkedPots: state.checkedPots + 1, unCheckedPosts: state.unCheckedPosts - 1 });
-}
+const getPostsFailed = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
 
-const decrementCheckedPosts = (state, action) => {
-    return updateObject(state, { checkedPots: state.checkedPots - 1, unCheckedPosts: state.unCheckedPosts + 1 });
-}
-
-const getUnCheckedPostsStart = (state, action) => {
+const putPostsToServerStart = (state) => {
     return updateObject(state, { error: null, loading: true });
+};
+
+const putPostsToServerSuccess = (state) => {
+    return updateObject(state, {
+        error: null,
+        loading: false
+    });
+};
+
+const putPostsToServerFailed = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
+const updatePostUsers = (state, action) => {
+    console.log('updatePostUsers');
+    const userid = localStorage.getItem('userId');
+    let posts = state.posts;
+    posts.map((post) => {
+        if (post.id === action.postId) {
+            const index = post.users.indexOf(action.userId);
+            index >= 0 ? post.users.splice(index, 1) : post.users.push(userid);
+            return true;
+        }
+        return false;
+    });
+    console.log(state.posts);
+    return updateObject(state, {
+        posts: state.posts
+    });
 }
 
-const getUnCheckedPostsSuccess = (state, action) => {
-    return updateObject(state, {  loading: false , posts : [...state.posts , ...action.posts] });
-}
-
-const getUnCheckedPostsFailed = (state, action) => {
-    return updateObject(state, { error: action.error , loading : false});
-}
-
-const updateUncheckedPostsStart = (state, action) => {
-    return updateObject(state, { error: null, loading: true });
-}
-
-const updateUncheckedPostsSuccess =(state, action) => {
-    return updateObject(state, { loading: false });
-}
-
-const updateUncheckedPostsFailed = (state, action) => {
-    return updateObject(state, { error: action.error ,loading : false });
-}
-
-const resetTheState = (state, action) =>{
-    return updateObject(state , { posts : [] });
-}
 
 const postsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -86,15 +86,10 @@ const postsReducer = (state = initialState, action) => {
         case actionTypes.GET_POSTS_START: return getPostsStart(state, action);
         case actionTypes.GET_POSTS_SUCCESS: return getPostsSuccess(state, action);
         case actionTypes.GET_POSTS_FAILED: return getPostsFailed(state, action);
-        case actionTypes.INCREMENT_CHECKED_POSTS: return incrementCheckedPosts(state, action);
-        case actionTypes.DECREMENT_CHECKED_POSTS: return decrementCheckedPosts(state, action);
-        case actionTypes.GET_UNCHECKED_POSTS_START: return getUnCheckedPostsStart(state, action);
-        case actionTypes.GET_UNCHECKED_POSTS_SUCCESS: return getUnCheckedPostsSuccess(state, action);
-        case actionTypes.GET_UNCHECKED_POSTS_FAILED: return getUnCheckedPostsFailed(state, action);
-        case actionTypes.UPDATE_UNCHECKED_POSTS_START: return updateUncheckedPostsStart(state, action);
-        case actionTypes.UPDATE_UNCHECKED_POSTS_SUCCESS: return updateUncheckedPostsSuccess(state, action);
-        case actionTypes.UPDATE_UNCHECKED_POSTS_FAILED: return updateUncheckedPostsFailed(state, action);
-        case actionTypes.RESET_THE_STATE: return resetTheState(state, action);
+        case actionTypes.UPDATE_CHECKED_POSTS: return updatePostUsers(state, action);
+        case actionTypes.PUT_POST_TO_SERVER_START: return putPostsToServerStart(state, action);
+        case actionTypes.PUT_POST_TO_SERVER_SUCCESS: return putPostsToServerSuccess(state, action);
+        case actionTypes.PUT_POST_TO_SERVER_FAILED: return putPostsToServerFailed(state, action);
         default:
             return state;
     }

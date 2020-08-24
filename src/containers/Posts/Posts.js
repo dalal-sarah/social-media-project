@@ -11,61 +11,108 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 class Posts extends Component {
 
-    checkboxes = [];
-    events = [];
-    updatedPosts = [];
+    constructor(props) {
+        super(props);
+        this.state = {
+            unCheckedPosts: -1,
+            checkedPosts: 0
+        }
+    }
 
     componentDidMount() {
-        if (this.props.lastLogIn)
-            this.props.getPosts();
+        const { getPosts } = this.props ? this.props : null;
+        getPosts();
+        
+    }
+    componentDidUpdate(){
+        const {postsFetched} = this.props ? this.props : null ;
+            if (postsFetched && this.state.unCheckedPosts < 0)
+               this.updateUnCheckedPosts();
     }
 
-    postOnClick = (event) => {
-        this.events.push(event.target);
-        if (event.target.checked) {
-            this.props.incrementCheckedPosts();
-            document.getElementById(event.target.id).name = event.target.id;
-        }
-        else {
-            this.props.decrementCheckedPosts();
-            document.getElementById(event.target.id).name = "";
-        };
-    }
-
-    updateTheState = () => {
-        const { posts } = this.props;
-        posts.map((post) => {
-            if (document.getElementById(post.id).name === "") {
-                this.updatedPosts.push(post);
-                return true;
-            }
-            return false;
-        });
-        this.props.updateUnCheckedPosts({ unCheckedPosts: this.updatedPosts });
-    }
+    // shouldComponentUpdate() {
+    //     return !this.props.postsFetched 
+    // }
 
     componentWillUnmount() {
-        this.updateTheState();
+        const { posts, putPostsToServer } = this.props ? this.props : null;
+        putPostsToServer(posts);
     }
 
+
     render() {
-        const { posts, loading, checkedPosts, unCheckedPosts } = this.props;
-        let renPosts = <p style={{ textAlign: 'center' }}>Loading ....!</p>;
+
+        console.log('rendering posts');
+        this.incrementCheckedPosts = () => {
+            this.setState(
+                {
+                    unCheckedPosts: this.state.unCheckedPosts - 1,
+                    checkedPosts: this.state.checkedPosts + 1
+                }
+            )
+            console.log(this.state);
+        }
+
+        this.decrementCheckedPosts = () => {
+            this.setState(
+                {
+                    unCheckedPosts: this.state.unCheckedPosts + 1,
+                    checkedPosts: this.state.checkedPosts - 1
+                }
+            )
+            console.log(this.state);
+        }
+        this.incrementUnCheckedPosts = () => {
+            console.log('incrementUnCheckedPosts ');
+            this.setState(
+                {
+                    unCheckedPosts: this.state.unCheckedPosts + 1
+                }
+            )
+        }
+
+        this.checkBoxOnClick = (event) => {
+            console.log(event.target.id);
+            const { updatecheckedPosts } = this.props ? this.props : null;
+            if (event.target.checked) {
+                this.incrementCheckedPosts();
+            }
+            else {
+                this.decrementCheckedPosts();
+            }
+
+            updatecheckedPosts(event.target.id)
+        }
+
+        this.updateUnCheckedPosts = () =>{
+            this.setState({
+                unCheckedPosts: this.numberOfUncheckedPosts
+            })
+        }
+        
+        const { posts, loading } = this.props ? this.props : null;
+        var renPosts = <p style={{ textAlign: 'center' }}>Loading ....!</p>;
+        this.numberOfUncheckedPosts = 0;
         if (!loading) {
+            const userId = localStorage.getItem('userId');
             renPosts = posts.map(post => {
-                let checkBox = <Checkbox name="" id={post.id} value="" onClick={this.postOnClick} />
-                this.checkboxes.push(checkBox);
-                return (
-                    <Post
-                        key={post.id}
-                        id={post.id}
-                        title={post.title}
-                        content={post.content}
-                    >
-                        {checkBox}
-                    </Post>
-                );
+                if (!post.users.includes(userId)) {
+                    this.numberOfUncheckedPosts++;
+                    return (
+                        <Post
+                            key={post.id}
+                            id={post.id}
+                            title={post.title}
+                            content={post.content}
+                        >
+                            <Checkbox key={post.id} name="" id={post.id} value="" onClick={this.checkBoxOnClick} />
+                        </Post>
+                    );
+                }
+                return false;
             });
+
+           
         }
 
         return (
@@ -78,13 +125,13 @@ class Posts extends Component {
                         alignItems="center"
 
                     >
-                        <CheckedCounter checked={checkedPosts} unChecked={unCheckedPosts} />
+                        <CheckedCounter {...this.props} checked={this.state.checkedPosts} unChecked={this.state.unCheckedPosts} />
                         <List >
                             {renPosts}
                         </List>
                     </Grid>
                 </section>
-            </div>
+            </div >
         );
     }
 }
@@ -94,18 +141,16 @@ const mapStateToProps = state => {
         posts: state.postsReducer.posts,
         error: state.postsReducer.error,
         loading: state.postsReducer.loading,
-        checkedPosts: state.postsReducer.checkedPots,
-        unCheckedPosts: state.postsReducer.unCheckedPosts,
-        lastLogIn: state.authReducer.lastLogIn
+        postsFetched: state.postsReducer.postsFetched
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getPosts: () => dispatch(actions.getPosts()),
-        incrementCheckedPosts: () => dispatch(actions.incrementCheckedPosts()),
-        decrementCheckedPosts: () => dispatch(actions.decrementCheckedPosts()),
-        updateUnCheckedPosts: (posts) => dispatch(actions.updateUncheckedPosts(posts))
+        updatecheckedPosts: (post) => dispatch(actions.updateCheckedPosts(post)),
+        putPostsToServer: (posts) => dispatch(actions.putPostsToServer(posts))
+
     };
 };
 

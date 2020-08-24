@@ -10,7 +10,7 @@ const initialState = {
     lastLogIn: localStorage.getItem('lastLogIn') != null
 };
 
-const authStart = (state, action) => {
+const authStart = (state) => {
     return updateObject(state, { error: null, loading: true });
 };
 
@@ -30,7 +30,7 @@ const LogInFailed = (state, action) => {
     });
 };
 
-const LogInStart = (state, action) => {
+const LogInStart = (state) => {
     return updateObject(state, {
         loading: true
     });
@@ -53,20 +53,9 @@ const authFail = (state, action) => {
     });
 };
 
-const authLogout = (state, action) => {
+const authLogout = (state) => {
     return updateObject(state, { token: null, userId: null, isAuth: false , lastLogIn : false });
 };
-
-const setLastLogInStart = (state, action) => {
-    return updateObject(state, { loading: true });
-}
-const setLastLogInSuccess= (state, action) => {
-    return updateObject(state, { lastLogIn: true , loading : false });
-}
-
-const setLastLogInFailed= (state, action) => {
-    return updateObject(state, { error : action.error });
-}
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -77,9 +66,6 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGIN_START: return LogInStart(state, action);
         case actionTypes.LOGIN_SUCCESS: return LogInSuccess(state, action);
         case actionTypes.LOGIN_FAILED: return LogInFailed(state, action);
-        case actionTypes.SET_LAST_LOGIN_START: return setLastLogInStart(state, action);
-        case actionTypes.SET_LAST_LOGIN_SUCCESS: return setLastLogInSuccess(state, action);
-        case actionTypes.SET_LAST_LOGIN_FAILED: return setLastLogInFailed(state, action);
         default:
             return state;
     }

@@ -62,24 +62,6 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
-export const setLastLogInStart = () => {
-    return {
-        type: actionTypes.SET_LAST_LOGIN_START
-    };
-}
-
-export const setLastLogInSuccess = () => {
-    return {
-        type: actionTypes.SET_LAST_LOGIN_SUCCESS
-    };
-}
-
-export const setLastLogInFailed = (error) => {
-    return {
-        type: actionTypes.SET_LAST_LOGIN_FAILED,
-        error: error
-    };
-}
 
 export const auth = (email, password, displayName, history) => {
     return dispatch => {
@@ -122,7 +104,7 @@ export const logIn = (email, password, history) => {
                 localStorage.setItem('displayName', response.data.displayName);
                 dispatch(LogInSuccess());
                 dispatch(checkAuthTimeout(response.data.expiresIn));
-                dispatch(getLastLogIn(response.data.idToken, history));
+                history.push('/posts');
             })
             .catch(err => {
                 dispatch(LogInFailed(err.response.data.error));
@@ -130,20 +112,3 @@ export const logIn = (email, password, history) => {
     };
 };
 
-export const getLastLogIn = (idToken, history) => {
-    return dispatch => {
-        dispatch(setLastLogInStart())
-        const data = { 'idToken': idToken };
-        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDuhXnx0Dz_nD1C_aZJ0x58sOGAgfIZtCc'
-        axios.post(url, data)
-            .then(response => {
-                const lastLogin = response.data.users[0].lastLoginAt;
-                console.log("last LogIn for user " + localStorage['displayName'] + "", lastLogin);
-                localStorage.setItem('lastLogIn', lastLogin / 1000);
-                dispatch(setLastLogInSuccess());
-                history.push('/posts');
-            }).catch(error => {
-                dispatch(setLastLogInFailed(error))
-            });
-    }
-}

@@ -8,8 +8,6 @@ export {
 export {
 post,
 getPosts,
-incrementCheckedPosts,
-decrementCheckedPosts,
-updateUncheckedPosts,
-getUnCheckedPosts
+updateCheckedPosts,
+putPostsToServer
 }from './posts'

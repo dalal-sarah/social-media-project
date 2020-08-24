@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 
 class CheckedCounter extends Component {
+
     render() {
+        const {checked , unChecked} = this.props ? this.props : null ;
         return (
             <Grid
                 container
@@ -11,8 +13,8 @@ class CheckedCounter extends Component {
                 alignItems="center"
 
             >
-                <label> Checked :  {this.props.checked} </label>
-                <label> UnChecked :  {this.props.unChecked}</label>
+                <label> Checked :  {checked} </label>
+                <label> UnChecked :  {unChecked}</label>
 
             </Grid>
 

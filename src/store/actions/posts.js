@@ -40,69 +40,40 @@ export const getPostsFailed = (error) => {
     };
 };
 
-export const incrementCheckedPosts = () => {
+export const updateCheckedPosts = (postId) => {
+    console.log(postId);
     return {
-        type: actionTypes.INCREMENT_CHECKED_POSTS
+        type: actionTypes.UPDATE_CHECKED_POSTS,
+        postId: postId
+
     }
 }
 
-export const decrementCheckedPosts = () => {
+export const putPostsToServerStart = () => {
     return {
-        type: actionTypes.DECREMENT_CHECKED_POSTS
-    }
-}
+        type: actionTypes.PUT_POST_TO_SERVER_START
+    };
+};
 
-export const getUnCheckedPostsStart = () => {
+export const putPostsToServerSuccess = () => {
     return {
-        type: actionTypes.GET_UNCHECKED_POSTS_START
-    }
-}
+        type: actionTypes.PUT_POST_TO_SERVER_SUCCESS
+    };
+};
 
-export const getUnCheckedPostsSuccess = (posts) => {
+export const putPostsToServerFailed = (error) => {
     return {
-        type: actionTypes.GET_UNCHECKED_POSTS_SUCCESS,
-        posts: posts
-    }
-}
-
-export const getUnCheckedPostsFailed = (error) => {
-    return {
-        type: actionTypes.GET_UNCHECKED_POSTS_FAILED,
+        type: actionTypes.PUT_POST_TO_SERVER_FAILED,
         error: error
-    }
-}
-
-export const updateUncheckedPostsStart = () => {
-    return {
-        type: actionTypes.UPDATE_UNCHECKED_POSTS_START
-    }
-}
-
-export const updateUncheckedPostsSuccess = () => {
-    return {
-        type: actionTypes.UPDATE_UNCHECKED_POSTS_SUCCESS
-    }
-}
-
-export const updateUncheckedPostsFailed = (error) => {
-    return {
-        type: actionTypes.GET_UNCHECKED_POSTS_FAILED,
-        error: error
-    }
-}
-
-export const resetTheState = () => {
-return{
-    type: actionTypes.RESET_THE_STATE
-}
-}
+    };
+};
 
 export const getPosts = () => {
     return dispatch => {
         const time = localStorage['lastLogIn'];
         console.log('lastLogIn', time);
         dispatch(getPostsStart())
-        axios.get(`https://social-media-project-535bc.firebaseio.com/posts.json?orderBy="time"&startAt=${time}`)
+        axios.get(`https://social-media-project-535bc.firebaseio.com/posts.json`)
             .then(response => {
                 console.log(response.data);
                 const fetchedPosts = [];
@@ -114,7 +85,7 @@ export const getPosts = () => {
                     });
                 }
                 dispatch(getPostsSuccess(fetchedPosts));
-                dispatch(getUnCheckedPosts());
+                // dispatch(getUnCheckedPosts());
             })
             .catch(error => {
                 dispatch(getPostsFailed(error));
@@ -122,45 +93,29 @@ export const getPosts = () => {
     };
 };
 
-export const post = (post) => {
+export const post = (Post) => {
     return dispatch => {
         dispatch(postStart());
-        axios.post('/posts.json', post)
+        axios.post('/posts.json', Post)
             .then(response => {
                 dispatch(postSuccess(response.data));
             })
             .catch(error => {
-                dispatch(PostFailed());
+                dispatch(PostFailed(error));
             });
     };
 };
 
-export const getUnCheckedPosts = () => {
-    return dispatch => {
-        dispatch(getUnCheckedPostsStart());
-        const userId = localStorage.getItem('userId');
-        axios.get(`/users/${userId}/unCheckedPosts.json`)
-            .then(response => {
-                dispatch(getUnCheckedPostsSuccess(response.data));
-                console.log(response.data);
-            })
-            .catch(error => {
-                dispatch(getUnCheckedPostsFailed(error));
-            });
-    }
-}
 
-export const updateUncheckedPosts = (posts) => {
-    return dispatch => {
-        dispatch(updateUncheckedPostsStart());
-        const userId = localStorage.getItem('userId');
-        axios.patch(`/users/${userId}.json`, posts)
-            .then(response => {
-                dispatch(updateUncheckedPostsSuccess());
-                dispatch(resetTheState());
-            })
-            .catch(error => {
-                dispatch(updateUncheckedPostsFailed(error));
-            });
+export const putPostsToServer = (posts) => {
+    return dispatch =>{
+        dispatch(putPostsToServerStart());
+    axios.put(`/posts.json`, posts)
+        .then(() => {
+            dispatch(putPostsToServerSuccess());
+        })
+        .catch(error => {
+            dispatch(putPostsToServerFailed(error))
+        });
     }
 }

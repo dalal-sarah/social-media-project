@@ -4,22 +4,21 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 class Theme extends Component {
-
-    theme = createMuiTheme({
-        palette: {
-            primary: {
-                main: '#115293',
-            },
-            secondary: {
-                main: '#dc004e',
-            },
-        },
-    });
-
     render() {
+        const theme = createMuiTheme({
+            palette: {
+                primary: {
+                    main: '#115293',
+                },
+                secondary: {
+                    main: '#dc004e',
+                },
+            },
+        });
+        const {children} = this.props ? this.props : null;
         return (
-            <ThemeProvider theme={this.theme}>
-                {this.props.children}
+            <ThemeProvider  theme={theme}>
+                {children}
             </ThemeProvider>
         );
     }
